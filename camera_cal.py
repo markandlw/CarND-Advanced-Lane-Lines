@@ -41,7 +41,7 @@ def cal_undistort(img):
     return cv2.undistort(img, mtx, dist, None, mtx)
 
 if __name__ == '__main__':
-	dest = 'undist_camera/'
+	dest = 'output_images/'
 	for fname in images:
 		img = cv2.imread(fname)
 		undist = cal_undistort(img)

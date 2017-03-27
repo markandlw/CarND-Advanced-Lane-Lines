@@ -16,8 +16,8 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./camera_cal/calibration3.jpg "Undistorted"
-[image11]: ./undist_camera/calibration3.jpg "Distorted"
+[image1]: ./camera_cal/calibration3.jpg "Original"
+[image11]: ./output_images/calibration3.jpg "Undistorted"
 [image2]: ./test_images/test1.jpg "Road Transformed"
 [image3]: ./examples/binary_combo_example.jpg "Binary Example"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
