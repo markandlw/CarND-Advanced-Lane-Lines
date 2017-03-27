@@ -54,6 +54,30 @@ def dir_threshold(img, sobel_kernel=3, thresh=(0, np.pi/2)):
     # Return the binary image
     return binary_output
 
+def s_color_threshold(img, thresh=(170,255)):
+    # HLS based on cv2.imread()
+    hls = cv2.cvtColor(img, cv2.COLOR_BGR2HLS).astype(np.float)
+    s_channel = hls[:,:,2]
+
+    s_binary = np.zeros_like(s_channel)
+    s_binary[(s_channel >= thresh[0]) & (s_channel <= thresh[1])] = 1
+
+    return s_binary
+
+def binary_pipeline(img):
+    ksize = 3
+    gradx = abs_sobel_thresh(img, orient='x', sobel_kernel=ksize, thresh=(50, 220))
+    grady = abs_sobel_thresh(img, orient='y', sobel_kernel=ksize, thresh=(50, 220))
+    mag_binary = mag_thresh(img, sobel_kernel=ksize, mag_thresh=(60,150))
+    dir_binary = dir_threshold(img, sobel_kernel=ksize, thresh=(0.8, 1.2))
+    s_binary = s_color_threshold(img, thresh=(130,255))
+
+    # Combine different output to get a final result here. 
+    combined = np.zeros_like(dir_binary)
+    combined[(s_binary == 1) | ((gradx == 1) & (grady == 1)) | ((mag_binary == 1) & (dir_binary == 1))] = 1
+
+    return combined
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Binay image output.')
     parser.add_argument('prefix', nargs='?', type=str, default='', help='File path to the image.')
@@ -63,15 +87,6 @@ if __name__ == '__main__':
     print('File: ' + args.prefix)
     img = cv2.imread(args.prefix)
 
-    ksize = 31
-    gradx = abs_sobel_thresh(img, orient='x', sobel_kernel=ksize, thresh=(20, 150))
-    grady = abs_sobel_thresh(img, orient='y', sobel_kernel=ksize, thresh=(50, 150))
-    mag_binary = mag_thresh(img, sobel_kernel=ksize, mag_thresh=(30, 100))
-    dir_binary = dir_threshold(img, sobel_kernel=ksize, thresh=(0.78, 1.3))
-
-    # Combine different output to get a final result here. 
-    combined = np.zeros_like(dir_binary)
-    combined[((gradx == 1) & (grady == 1)) | ((mag_binary == 1) & (dir_binary == 1))] = 1
-
+    combined = binary_pipeline(img)
     combined *= 255
     cv2.imwrite('./output_images/' + args.prefix.split('/')[-1], combined)

@@ -20,7 +20,8 @@ The goals / steps of this project are the following:
 [image11]: ./output_images/calibration3.jpg "Undistorted"
 [image2]: ./test_images/test1.jpg "Original"
 [image22]: ./output_images/undist_test1.jpg "Undistorted"
-[image3]: ./output_images/signs_vehicles_xygrad.png "Binary Example X"
+[image3]: ./output_images/straight_lines1.jpg "Straight lines Example 1"
+[image33]: ./output_images/straight_lines2.jpg "Straight lines Example 2"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
@@ -59,7 +60,8 @@ To demonstrate this step, I will describe how I apply the distortion correction 
 ####2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 I used a combination of color and gradient thresholds to generate a binary image (thresholding steps  in `binary_img.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
 
-![alt text][image3]{height=422}
+![alt text][image3]{height=216}
+![alt text][image33]{height=216}
 
 ####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
