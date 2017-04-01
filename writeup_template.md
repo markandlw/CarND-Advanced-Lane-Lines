@@ -24,7 +24,7 @@ The goals / steps of this project are the following:
 [image33]: ./output_images/straight_lines2.jpg "Straight lines Example 2"
 [image4]: ./output_images/tag_straight_lines1.jpg "Unwarp Example"
 [image44]: ./output_images/warped_straight_lines1.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
+[image5]: ./output_images/bin_warp_fit_test1 "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
@@ -47,22 +47,22 @@ I start by preparing "object points", which will be the (x, y, z) coordinates of
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
 
-![alt text][image1]{height=216}
-![alt text][image11]{height=216}
+![alt text][image1]
+![alt text][image11]
 
 ###Pipeline (single images)
 
 ####1. Provide an example of a distortion-corrected image.
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
 
-![alt text][image2]{height=216}
-![alt text][image22]{height=216}
+![alt text][image2]
+![alt text][image22]
 
 ####2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 I used a combination of color and gradient thresholds to generate a binary image (thresholding steps  in `binary_image.py`) with solid lane lines.  Here's examples of my output for this step. The two straight-lines images are selected from `test_images`.
 
-![alt text][image3]{height=216}
-![alt text][image33]{height=216}
+![alt text][image3]
+![alt text][image33]
 
 ####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
@@ -95,12 +95,12 @@ dst: [[ 320.    0.]
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
-![alt text][image4]{height=216}
-![alt text][image44]{height=216}
+![alt text][image4]
+![alt text][image44]
 
 ####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+The file `find_lines.py` contains the code for finding lane-line pixels. The overall procedure I took is first establishing historgram of the bottom half of the binarized-warped image. By using the historgram, I can find the two peaks which are possible left/right lanes. By using sliding window mechanism, I can aggregate the nonzero pixels slide by slide and form my left/right lanes. Then fit my lane lines with a 2nd order polynomial kinda like this:
 
 ![alt text][image5]
 
