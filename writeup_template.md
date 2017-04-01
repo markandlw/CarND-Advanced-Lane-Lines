@@ -24,7 +24,7 @@ The goals / steps of this project are the following:
 [image33]: ./output_images/straight_lines2.jpg "Straight lines Example 2"
 [image4]: ./output_images/tag_straight_lines1.jpg "Unwarp Example"
 [image44]: ./output_images/warped_straight_lines1.jpg "Warp Example"
-[image5]: ./output_images/bin_warp_fit_test1 "Fit Visual"
+[image5]: ./output_images/bin_warp_fit_test1.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
