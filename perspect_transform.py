@@ -5,7 +5,7 @@ import camera_cal as cc
 
 def warper(img):
 	img_size = img.shape
-	print(img_size)
+	#print(img_size)
 
 	src = np.float32(
 		[[img_size[1] / 2 - 63, img_size[0] / 2 + 100],
@@ -13,7 +13,7 @@ def warper(img):
 		[img_size[1] / 2 + 485, img_size[0]],
 		[img_size[1] / 2 - 450, img_size[0]]])
 
-	print(src)
+	#print(src)
 
 	dst = np.float32(
     	[[(img_size[1] / 4), 0],
@@ -21,7 +21,7 @@ def warper(img):
     	[(img_size[1] * 3 / 4), img_size[0]],
     	[(img_size[1] / 4), img_size[0]]])
     	
-	print(dst)
+	#print(dst)
 
 	M = cv2.getPerspectiveTransform(src, dst)
 

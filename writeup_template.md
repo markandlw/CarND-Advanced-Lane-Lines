@@ -106,7 +106,7 @@ The file `find_lines.py` contains the code for finding lane-line pixels. The ove
 
 ####5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `my_other_file.py`
+I did this in lines 95 through 122 in my code in `find_lines.py`
 
 ####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 

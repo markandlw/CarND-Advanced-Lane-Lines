@@ -7,7 +7,11 @@ from perspect_transform import warper
 from binary_image import binary_pipeline
 
 def find_lane(binary_warped):
-# Assuming you have created a warped binary image called "binary_warped"
+    '''
+    The procedure below will find the lane lines on the binay_warped and color them.
+    Return the colored image and the derived polynomial line.
+    '''
+    # Assuming you have created a warped binary image called "binary_warped"
     # Take a histogram of the bottom half of the image
     histogram = np.sum(binary_warped[binary_warped.shape[0]//2:,:], axis=0)
     # Create an output image to draw on and  visualize the result
@@ -47,8 +51,8 @@ def find_lane(binary_warped):
         win_xright_low = rightx_current - margin
         win_xright_high = rightx_current + margin
         # Draw the windows on the visualization image
-        cv2.rectangle(out_img,(win_xleft_low,win_y_low),(win_xleft_high,win_y_high),(0,255,0), 2) 
-        cv2.rectangle(out_img,(win_xright_low,win_y_low),(win_xright_high,win_y_high),(0,255,0), 2) 
+        #cv2.rectangle(out_img,(win_xleft_low,win_y_low),(win_xleft_high,win_y_high),(0,255,0), 2) 
+        #cv2.rectangle(out_img,(win_xright_low,win_y_low),(win_xright_high,win_y_high),(0,255,0), 2) 
         # Identify the nonzero pixels in x and y within the window
         good_left_inds = ((nonzeroy >= win_y_low) & (nonzeroy < win_y_high) & (nonzerox >= win_xleft_low) & (nonzerox < win_xleft_high)).nonzero()[0]
         good_right_inds = ((nonzeroy >= win_y_low) & (nonzeroy < win_y_high) & (nonzerox >= win_xright_low) & (nonzerox < win_xright_high)).nonzero()[0]
@@ -86,7 +90,36 @@ def find_lane(binary_warped):
     out_img[ploty.astype(np.uint32), left_fitx.astype(np.uint32)] = [0, 255, 255]
     out_img[ploty.astype(np.uint32), right_fitx.astype(np.uint32)] = [0, 255, 255]
 
-    return out_img,left_fit,right_fit
+    return out_img, ploty, left_fitx, right_fitx
+
+# Define conversions in x and y from pixels space to meters
+ym_per_pix = 30/720 # meters per pixel in y dimension
+xm_per_pix = 3.7/700 # meters per pixel in x dimension
+
+def find_curvature(y_eval, ploty, left_fitx, right_fitx):
+    '''
+    Use pre-derived polynomial data to derive the curvature.
+    '''
+
+    # Fit new polynomials to x,y in world space
+    left_fit_cr = np.polyfit(ploty*ym_per_pix, left_fitx*xm_per_pix, 2)
+    right_fit_cr = np.polyfit(ploty*ym_per_pix, right_fitx*xm_per_pix, 2)
+    # Calculate the new radii of curvature
+    left_curverad = ((1 + (2*left_fit_cr[0]*y_eval*ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
+    right_curverad = ((1 + (2*right_fit_cr[0]*y_eval*ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
+    # Now our radius of curvature is in meters
+    return left_curverad,right_curverad
+
+def find_center(left_fitx, right_fitx):
+    '''
+    Find the real world distance between lane center and camera center.
+    '''
+
+    lane_center = np.absolute(right_fitx[-1] - left_fitx[-1]) / 2 + left_fitx[-1]
+    camera_center = 1280 / 2
+
+    offset = (lane_center - camera_center) * xm_per_pix
+    return offset
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Line finding pipeline.')
@@ -102,6 +135,12 @@ if __name__ == '__main__':
     
     _,warped = warper(combined)
     
-    out_img,left_fit,right_fit = find_lane(warped)
+    out_img,ploty,left_fitx,right_fitx= find_lane(warped)
+
+    left_curad,right_curad = find_curvature(img.shape[0],ploty,left_fitx,right_fitx)
+    print(left_curad, 'm', right_curad, 'm')
+
+    offset = find_center(left_fitx,right_fitx)
+    print(offset, 'm of center')
 
     cv2.imwrite('./output_images/bin_warp_fit_' + args.prefix.split('/')[-1], out_img)
