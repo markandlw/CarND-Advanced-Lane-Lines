@@ -25,7 +25,7 @@ The goals / steps of this project are the following:
 [image4]: ./output_images/tag_straight_lines1.jpg "Unwarp Example"
 [image44]: ./output_images/warped_straight_lines1.jpg "Warp Example"
 [image5]: ./output_images/bin_warp_fit_test1.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
+[image6]: ./output_images/mapped_test3.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
@@ -110,7 +110,7 @@ I did this in lines 95 through 122 in my code in `find_lines.py`
 
 ####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+I implemented this step in lines 11 through 45 in my code in `map_lane.py` in the function `map_lane()`.  Here is an example of my result on a test image:
 
 ![alt text][image6]
 
