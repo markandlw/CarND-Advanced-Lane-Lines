@@ -128,5 +128,5 @@ Here's a [link to my video result](./output_images/project_video_output.mp4)
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-* I found that my original pipeline failed at the last tree shadow part. I think it mistakenly detects the shaow as right lane, but it is a shadow edge toward left in fact. As a result, I implemented a filter machanism which takes corrlation between frames into account to filter out strange curves and a smoother machanism which uses several curve infomation to form an average curve. The result shows that these mechanism did help me in this scenario.
+* I found that my original pipeline failed at the last tree shadow part. I think it mistakenly detects the shaow as right lane, but it is a shadow edge toward left in fact. As a result, I implemented a filter machanism which takes corrlation between frames into account to filter out strange curves and a smoother machanism which uses several curve infomation to form an average curve. The result shows that these mechanisms did help me in this scenario.
 
