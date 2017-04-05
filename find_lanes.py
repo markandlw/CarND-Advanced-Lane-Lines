@@ -86,8 +86,8 @@ def find_lane(binary_warped):
     out_img[nonzeroy[left_lane_inds], nonzerox[left_lane_inds]] = [255, 0, 0]
     out_img[nonzeroy[right_lane_inds], nonzerox[right_lane_inds]] = [0, 255, 0]
 
-    out_img[ploty.astype(np.uint32), left_fitx.astype(np.uint32)] = [0, 255, 255]
-    out_img[ploty.astype(np.uint32), right_fitx.astype(np.uint32)] = [0, 255, 255]
+    # out_img[ploty.astype(np.uint32), left_fitx.astype(np.uint32)] = [0, 255, 255]
+    # out_img[ploty.astype(np.uint32), right_fitx.astype(np.uint32)] = [0, 255, 255]
 
     return out_img, ploty, left_fit, right_fit, left_fitx, right_fitx
 

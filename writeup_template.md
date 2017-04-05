@@ -26,7 +26,7 @@ The goals / steps of this project are the following:
 [image44]: ./output_images/warped_straight_lines1.jpg "Warp Example"
 [image5]: ./output_images/bin_warp_fit_test1.jpg "Fit Visual"
 [image6]: ./output_images/mapped_test3.jpg "Output"
-[video1]: ./project_video.mp4 "Video"
+[video1]: ./output_images/project_video_output.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -120,7 +120,7 @@ I implemented this step in lines 11 through 45 in my code in `map_lane.py` in th
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./output_images/project_video_output.mp4)
 
 ---
 
@@ -128,5 +128,5 @@ Here's a [link to my video result](./project_video.mp4)
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+* I found that my original pipeline failed at the last tree shadow part. I think it mistakenly detects the shaow as right lane, but it is a shadow edge toward left in fact. As a result, I implemented a filter machanism which takes corrlation between frames into account to filter out strange curves and a smoother machanism which uses several curve infomation to form an average curve. The result shows that these mechanism did help me in this scenario.
 
