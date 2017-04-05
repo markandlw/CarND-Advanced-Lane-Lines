@@ -70,7 +70,7 @@ def binary_pipeline(img):
     grady = abs_sobel_thresh(img, orient='y', sobel_kernel=ksize, thresh=(50, 220))
     mag_binary = mag_thresh(img, sobel_kernel=ksize, mag_thresh=(60,150))
     dir_binary = dir_threshold(img, sobel_kernel=ksize, thresh=(0.8, 1.2))
-    s_binary = s_color_threshold(img, thresh=(130,255))
+    s_binary = s_color_threshold(img, thresh=(130,200))
 
     # Combine different output to get a final result here. 
     combined = np.zeros_like(dir_binary)
