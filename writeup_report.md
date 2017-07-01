@@ -1,7 +1,4 @@
-##Writeup Report
----
-
-**Advanced Lane Finding Project**
+# Advanced Lane Finding Project
 
 The goals / steps of this project are the following:
 
@@ -29,17 +26,13 @@ The goals / steps of this project are the following:
 [video1]: ./output_images/project_video_output.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
-###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
+Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
----
-###Writeup / README
-
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
+### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
 
 You're reading it!
-###Camera Calibration
 
-####1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
+### 2. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
 
 The code for this step is contained in the first code cell of the IPython notebook located in "./examples/example.ipynb" (or in lines # through # of the file called `some_file.py`).  
 
@@ -50,21 +43,19 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 ![alt text][image1]
 ![alt text][image11]
 
-###Pipeline (single images)
-
-####1. Provide an example of a distortion-corrected image.
+### 3. Provide an example of a distortion-corrected image.
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
 
 ![alt text][image2]
 ![alt text][image22]
 
-####2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
+### 4. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 I used a combination of color and gradient thresholds to generate a binary image (thresholding steps  in `binary_image.py`) with solid lane lines.  Here's examples of my output for this step. The two straight-lines images are selected from `test_images`.
 
 ![alt text][image3]
 ![alt text][image33]
 
-####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
+### 5. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
 The code for my perspective transform includes a function called `warper()`, which in the file `perspect_transform.py`. The `warper()` function takes input of an image (`img`). I chose the hardcode the source and destination points in the following manner:
 
@@ -98,35 +89,27 @@ I verified that my perspective transform was working as expected by drawing the 
 ![alt text][image4]
 ![alt text][image44]
 
-####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
+### 6. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
 The file `find_lines.py` contains the code for finding lane-line pixels. The overall procedure I took is first establishing historgram of the bottom half of the binarized-warped image. By using the historgram, I can find the two peaks which are possible left/right lanes. By using sliding window mechanism, I can aggregate the nonzero pixels slide by slide and form my left/right lanes. Then fit my lane lines with a 2nd order polynomial kinda like this:
 
 ![alt text][image5]
 
-####5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
+### 7. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
 I did this in lines 95 through 122 in my code in `find_lines.py`
 
-####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
+### 8. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
 I implemented this step in lines 11 through 45 in my code in `map_lane.py` in the function `map_lane()`.  Here is an example of my result on a test image:
 
 ![alt text][image6]
 
----
-
-###Pipeline (video)
-
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
+### 9. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
 Here's a [link to my video result](./output_images/project_video_output.mp4)
 
----
+### 11. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-###Discussion
-
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
-
-* I found that my original pipeline failed at the last tree shadow part. I think it mistakenly detects the shaow as right lane, but it is a shadow edge toward left in fact. As a result, I implemented a filter machanism which takes corrlation between frames into account to filter out strange curves and a smoother machanism which uses several curve infomation to form an average curve. The result shows that these mechanisms did help me in this scenario.
+I found that my original pipeline failed at the last tree shadow part. I think it mistakenly detects the shaow as right lane, but it is a shadow edge toward left in fact. As a result, I implemented a filter machanism which takes corrlation between frames into account to filter out strange curves and a smoother machanism which uses several curve infomation to form an average curve. The result shows that these mechanisms did help me in this scenario.
 
